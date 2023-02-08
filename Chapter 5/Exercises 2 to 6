@@ -46,6 +46,8 @@ int main()
         double input;
         cin >> input;
         double result = ctok(input);
+        // if (k < 0)
+        // error("Kelvin cannot be lower than 0K.\n");
         cout << "Celsius to Kelvin= " << result << endl;
         result = celsiusToFahrenheit(input);
         cout << "Celsius to Fahrenheit= " << result << endl;
