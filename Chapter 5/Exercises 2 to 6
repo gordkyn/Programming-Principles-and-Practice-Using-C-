@@ -5,6 +5,14 @@
 #include <cmath>
 using namespace std;
 
+// PROGRAM NAME: TRAINING
+// PURPOSE: IMPROVE C++ SKILLS AND PROGRAMMING KNOWLEDGE
+// WRITTEN BY MHS 08/02/2023
+// VER 1.0
+
+//INPUTS ARE NOT CHECKED THOROUGHLY (CAN ENTER CHARS OR STRINGS)
+
+
 void error(string s) { throw runtime_error(s); }
 
 double ctok(double c)
