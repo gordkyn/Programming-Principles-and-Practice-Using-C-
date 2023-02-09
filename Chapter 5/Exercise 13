@@ -28,6 +28,7 @@ void compareNumbers(vector<int> input, vector<int> numberToGuess)
             }
             if (input[i] == numberToGuess[j] && i != j && !skipCowCheck)
                 ++cow;
+            skipCowCheck = 0;
         }
     }
     cout << bull << " bull(s) and " << cow << " cow(s)" << endl;
@@ -73,7 +74,7 @@ int newNumber()
     cout << "To start a new game, write a random number (any integer): ";
     cin >> userInput;
 
-    if (!userInput < INT_MAX && !userInput > INT_MIN)
+    if (!(userInput < INT_MAX) && !(userInput > INT_MIN))
         error("Invalid value entered.");
     srand(userInput);
     return rand() % 9000 + 1000;
