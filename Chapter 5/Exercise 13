@@ -1,0 +1,124 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// PROGRAM NAME: TRAINING
+// PURPOSE: IMPROVE C++ SKILLS AND PROGRAMMING KNOWLEDGE
+// WRITTEN BY MHS 09/02/2023
+// VER 1.0
+
+void error(string s) { throw runtime_error(s); }
+
+void compareNumbers(vector<int> input, vector<int> numberToGuess)
+{
+    if (input.size() != numberToGuess.size())
+        error("Numbers can't be compared due to size difference!");
+
+    int bull = 0, cow = 0, skipCowCheck = 0;
+    for (int i = 0; i < input.size(); i++)
+    {
+        for (int j = 0; j < numberToGuess.size(); j++)
+        {
+            if (input[i] == numberToGuess[j] && i == j)
+            {
+                ++bull;
+                skipCowCheck = 1;
+            }
+            if (input[i] == numberToGuess[j] && i != j && !skipCowCheck)
+                ++cow;
+        }
+    }
+    cout << bull << " bull(s) and " << cow << " cow(s)" << endl;
+}
+vector<int> breakDownInteger(int input)
+{
+    vector<int> inputToVector;
+    int numberLeft = input;
+    int digit1 = numberLeft / 1000;
+    numberLeft -= digit1 * 1000;
+    int digit2 = numberLeft / 100;
+    numberLeft -= digit2 * 100;
+    int digit3 = numberLeft / 10;
+    numberLeft -= digit3 * 10;
+    int digit4 = numberLeft;
+
+    inputToVector.push_back(digit1);
+    inputToVector.push_back(digit2);
+    inputToVector.push_back(digit3);
+    inputToVector.push_back(digit4);
+    return inputToVector;
+}
+
+int restartGame()
+{
+    bool restart;
+    cout << "Restart game(y or n)? ";
+    char yesOrNo;
+    cin >> yesOrNo;
+
+    if (yesOrNo == 'y')
+        restart = 1;
+    else if (yesOrNo == 'n')
+        restart = 0;
+    else
+        error("Invalid input");
+    return restart;
+}
+
+int newNumber()
+{
+    int userInput;
+    cout << "To start a new game, write a random number (any integer): ";
+    cin >> userInput;
+
+    if (!userInput < INT_MAX && !userInput > INT_MIN)
+        error("Invalid value entered.");
+    srand(userInput);
+    return rand() % 9000 + 1000;
+}
+
+int main()
+{
+    cout << "This game is called bulls and cows. ";
+    cout << "The computer will memorize a number with 4 digits. You need to guess this number. ";
+    cout << "Bull means you guessed a digit correct, cow means you guessed a number correct but it's digit wrong.\n";
+    int input, numberToGuess = newNumber();
+    cout << "Guess a number: ";
+    bool restart = 0;
+    vector<int> numToGuessVector = breakDownInteger(numberToGuess);
+    try
+    {
+        while (true)
+        {
+            cin >> input;
+
+            if (input == numberToGuess)
+            {
+                cout << "You guessed correct!" << endl;
+                restart = restartGame();
+                if (!restart)
+                    break;
+                numberToGuess = newNumber();
+                numToGuessVector = breakDownInteger(numberToGuess);
+            }
+            else
+            {
+                vector<int> inputDigits = breakDownInteger(input);
+                compareNumbers(inputDigits, numToGuessVector);
+                inputDigits.clear();
+            }
+            cout << "Make a new guess: ";
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error: " << e.what() << endl;
+    }
+    catch (...)
+    {
+        cerr << "Unknown error occurred." << endl;
+    }
+    return 0;
+}
