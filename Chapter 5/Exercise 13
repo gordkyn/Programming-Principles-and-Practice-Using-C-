@@ -74,7 +74,7 @@ int newNumber()
     cout << "To start a new game, write a random number (any integer): ";
     cin >> userInput;
 
-    if (!(userInput < INT_MAX) && !(userInput > INT_MIN))
+    if (!cin)
         error("Invalid value entered.");
     srand(userInput);
     return rand() % 9000 + 1000;
